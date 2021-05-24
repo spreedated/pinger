@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;net472;net48;net5.0</TargetFrameworks>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Markus Wackermann</Authors>
+    <Company>neXn-Systems</Company>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/spreedated/pinger</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/spreedated/pinger.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ping system net nexn</PackageTags>
+    <Description>Wrapper class for System.Net.Ping</Description>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>wackermann.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Assets\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
