@@ -1,6 +1,8 @@
 using neXn.Pinger;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace PingerTests
@@ -33,6 +35,11 @@ namespace PingerTests
         {
             Ping p = new Ping(192, 168, 10, new Ping.OctetRange() { From = 1, To = 20 });
             p.Run();
+
+            if (p.Addresses.Length != p.PingReplies.Count)
+            {
+                Console.WriteLine($"Mismatch in replies, missing IPs: \"{string.Join(',', p.Addresses.Where(x => !p.PingReplies.Select(x => x.Address).Contains(x)))}\"");
+            }
 
             Assert.AreEqual(20, p.PingReplies.Count);
         }

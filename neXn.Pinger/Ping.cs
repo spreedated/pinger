@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using evn = neXn.Pinger.EventArgs;
 using snn = System.Net.NetworkInformation;
@@ -112,19 +114,31 @@ namespace neXn.Pinger
 
             this.AsyncPingFinished?.Invoke(this, new evn.PingFinishedEventArgs() { AddressCount = this.Addresses.Length });
         }
+
         public List<PingReply> Run()
         {
-            List<Task> t = new List<Task>();
+            Task[] t = new Task[this.Addresses.Length];
 
-            foreach (IPAddress a in Addresses)
+            for (int i = 0; i < this.Addresses.Length; i++)
             {
-                t.Add(Task.Factory.StartNew(() => { PingerObject(a); }));
+                int inc = i;
+                t[i] = Task.Factory.StartNew(() =>
+                {
+                    Thread.CurrentThread.Name = $"Pinging \"{this.Addresses[inc]}\"";
+                    PingerObject(this.Addresses[inc]);
+                    Debug.Print($"Task for \"{this.Addresses[inc]}\" completed");
+                });
             }
 
-            Task.WaitAll(t.ToArray());
+            Debug.Print($"Tasklist with [{t.Count()}/{t.Length}] tasks created.");
+
+            Task.WaitAll(t);
+
+            Debug.Print($"Tasks ran to completion [faulted/completed]: [{t.Count(x => x.Status != TaskStatus.RanToCompletion)}/{t.Count(x => x.Status == TaskStatus.RanToCompletion)}]");
 
             return this.PingReplies;
         }
+
         public void RemoveAddress(IPAddress iPAddress)
         {
             List<IPAddress> ad = this.Addresses.ToList();
@@ -151,16 +165,25 @@ namespace neXn.Pinger
             snn.Ping p = new snn.Ping();
             byte[] buffer = ASCIIEncoding.ASCII.GetBytes("ThisIsAPingMessageOf32.BitLength");
 
-            snn.PingOptions options = new snn.PingOptions(64, true);
-            snn.PingReply pR = p.Send(address, 100, buffer, options);
+            snn.PingReply pR = null;
+
+            try
+            {
+                snn.PingOptions options = new snn.PingOptions(64, true);
+                pR = p.Send(address, 100, buffer, options);
+            }
+            catch (Exception) { }
 
             PingReply s = new PingReply()
             {
                 Address = address,
-                IsAvailable = pR.Status == snn.IPStatus.Success
+                IsAvailable = pR != null && (pR.Status == snn.IPStatus.Success)
             };
 
-            PingReplies.Add(s);
+            lock (this.PingReplies)
+            {
+                PingReplies.Add(s);
+            }
 
             p.Dispose();
 

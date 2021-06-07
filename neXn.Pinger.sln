@@ -3,12 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neXn.Pinger", "neXn.Pinger\neXn.Pinger.csproj", "{82BE1C3C-7CAD-4947-88C1-FDFFFB8A5CEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "neXn.Pinger", "neXn.Pinger\neXn.Pinger.csproj", "{82BE1C3C-7CAD-4947-88C1-FDFFFB8A5CEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neXn.Tests", "neXn.Tests\neXn.Tests.csproj", "{64D47AE1-457D-48EF-A3E4-479507325060}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "neXn.Tests", "neXn.Tests\neXn.Tests.csproj", "{64D47AE1-457D-48EF-A3E4-479507325060}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{51F12A8A-C39B-4AE4-AA12-D98879DB556A}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\alt.png = Assets\alt.png
+		Assets\alternative_icon.cdr = Assets\alternative_icon.cdr
+		Assets\alternative_icon.svg = Assets\alternative_icon.svg
 		Assets\icon.png = Assets\icon.png
 	EndProjectSection
 EndProject

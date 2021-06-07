@@ -16,6 +16,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>wackermann.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
